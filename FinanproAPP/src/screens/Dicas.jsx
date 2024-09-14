@@ -1,11 +1,14 @@
-import { View, Text, Button } from "react-native";
-import styles from "../styles/styles";
-import CustomButton from "../components/CustomButton";
+// src/screens/Dicas.js
+import React from 'react';
+import { View, Text } from 'react-native';
+import styles from '../styles/styles';
 
-export default function Dicas({navigation}) {
+const Dicas = () => {
   return (
-    <View style={styles.container}>
-      <Text>Dicas</Text>
+    <View style={styles.screenContainer}>
+      <Text>Dicas Screen</Text>
     </View>
   );
-}
+};
+
+export default Dicas;

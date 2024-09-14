@@ -78,5 +78,18 @@ export default StyleSheet.create({
   },
   placeholderButton: {
     width: 60, // Mantém o layout balanceado
-  }
+  },
+  screen: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  shadow: {
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.3,
+    shadowRadius: 10,
+    elevation: 5,
+  },
+
 });

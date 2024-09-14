@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { FAB } from 'react-native-paper';
+import styles from '../styles/styles';
 
 const AddButton = () => (
   <View style={styles.container}>

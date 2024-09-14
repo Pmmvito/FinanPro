@@ -1,14 +1,14 @@
-// src/screens/Home.js
+// src/screens/Financeiro.js
 import React from 'react';
 import { View, Text } from 'react-native';
 import styles from '../styles/styles';
 
-const Home = () => {
+const Financeiro = () => {
   return (
     <View style={styles.screenContainer}>
-      <Text>Home Screen</Text>
+      <Text>Financeiro Screen</Text>
     </View>
   );
 };
 
-export default Home;
+export default Financeiro;

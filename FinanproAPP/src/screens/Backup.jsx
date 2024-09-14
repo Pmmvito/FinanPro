@@ -1,11 +1,14 @@
-import { View, Text, Button } from "react-native";
-import styles from "../styles/styles";
-import CustomButton from "../components/CustomButton";
+// src/screens/Backup.js
+import React from 'react';
+import { View, Text } from 'react-native';
+import styles from '../styles/styles';
 
-export default function Backup({navigation}) {
+const Backup = () => {
   return (
-    <View style={styles.container}>
-      <Text>Backup</Text>
+    <View style={styles.screenContainer}>
+      <Text>Backup Screen</Text>
     </View>
   );
-}
+};
+
+export default Backup;

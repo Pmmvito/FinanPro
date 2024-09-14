@@ -1,116 +1,84 @@
-import React, { useState } from 'react';
-import { View, StyleSheet, Text, TouchableOpacity, Modal } from 'react-native';
-import { AntDesign } from '@expo/vector-icons';
+// src/App.js
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import Icon from 'react-native-vector-icons/Ionicons';
 
-const App = () => {
-  const [modalVisible, setModalVisible] = useState(false);
+import Home from './src/screens/Home';
+import Financeiro from './src/screens/Financeiro';
+import AddOpcao from './src/screens/AddOpcao';
+import Dicas from './src/screens/Dicas';
+import Backup from './src/screens/Backup';
+import styles from './src/styles/styles';
 
+const Tab = createBottomTabNavigator();
+
+export default function App() {
   return (
-    <View style={styles.container}>
-      {/* Barra de Navegação na Parte Inferior */}
-      <View style={styles.navigation}>
-        {/* Botão Home */}
-        <TouchableOpacity style={styles.navButton}>
-          <Text>Home</Text>
-        </TouchableOpacity>
-
-        {/* Espaço vazio para equilíbrio visual */}
-        <View style={styles.placeholderButton} />
-
-        {/* Botão Add Despesas */}
-        <TouchableOpacity style={styles.navButton}>
-          <Text>Add Despesas</Text>
-        </TouchableOpacity>
-      </View>
-
-      {/* Botão Flutuante */}
-      <TouchableOpacity 
-        style={styles.floatingButton} 
-        onPress={() => setModalVisible(true)}
+    <NavigationContainer>
+      <Tab.Navigator
+        screenOptions={{
+          tabBarShowLabel: false,
+          tabBarStyle: {
+            position: 'absolute',
+            bottom: 25,
+            left: 20,
+            right: 20,
+            elevation: 0,
+            backgroundColor: '#ffffff',
+            borderRadius: 15,
+            height: 90,
+            ...styles.shadow,
+          },
+        }}
       >
-        <AntDesign name="plus" size={24} color="white" />
-      </TouchableOpacity>
-
-      {/* Modal com opções */}
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => setModalVisible(false)}
-      >
-        <TouchableOpacity 
-          style={styles.modalContainer} 
-          activeOpacity={1} 
-          onPressOut={() => setModalVisible(false)}
-        >
-          <View style={styles.menu}>
-            <MenuItem icon="pluscircleo" title="Receita" />
-            <MenuItem icon="minuscircleo" title="Despesa" />
-          </View>
-        </TouchableOpacity>
-      </Modal>
-    </View>
+        <Tab.Screen
+          name="Home"
+          component={Home}
+          options={{
+            tabBarIcon: ({ color }) => (
+              <Icon name="home-outline" color={color} size={25} />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="Financeiro"
+          component={Financeiro}
+          options={{
+            tabBarIcon: ({ color }) => (
+              <Icon name="wallet-outline" color={color} size={25} />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="AddOpcao"
+          component={AddOpcao}
+          options={{
+            tabBarIcon: ({ color }) => (
+              <Icon name="add-circle-outline" color="#E9446A" size={30} />
+            ),
+            tabBarButton: (props) => <AddOpcao {...props} />, // Usando AddOpcao diretamente
+          }}
+        />
+        <Tab.Screen
+          name="Dicas"
+          component={Dicas}
+          options={{
+            tabBarIcon: ({ color }) => (
+              <Icon name="bulb-outline" color={color} size={25} />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="Backup"
+          component={Backup}
+          options={{
+            tabBarIcon: ({ color }) => (
+              <Icon name="cloud-upload-outline" color={color} size={25} />
+            ),
+          }}
+        />
+      </Tab.Navigator>
+    </NavigationContainer>
   );
-};
-
-const MenuItem = ({ icon, title }) => (
-  <TouchableOpacity style={styles.menuItem}>
-    <AntDesign name={icon} size={20} color="white" />
-    <Text style={styles.menuText}>{title}</Text>
-  </TouchableOpacity>
-);
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'flex-end',
-  },
-  navigation: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    backgroundColor: '#f0f0f0',
-    paddingBottom: 10,
-    paddingTop: 10,
-  },
-  navButton: {
-    flex: 1,
-    alignItems: 'center',
-  },
-  placeholderButton: {
-    width: 60,
-  },
-  floatingButton: {
-    position: 'absolute',
-    alignSelf: 'center',
-    bottom: 20,
-    backgroundColor: '#FFA500',
-    borderRadius: 30,
-    width: 60,
-    height: 60,
-    justifyContent: 'center',
-    alignItems: 'center',
-    elevation: 8,
-  },
-  modalContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  menu: {
-    backgroundColor: '#FFA523',
-    borderRadius: 10,
-    padding: 15,
-  },
-  menuItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 10,
-  },
-  menuText: {
-    color: 'white',
-    marginLeft: 10,
-    fontSize: 18,
-  }
-});
-
-export default App;
+}
