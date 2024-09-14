@@ -1,6 +1,13 @@
 // src/screens/Dicas.js
-import React from 'react';
-import { View, Text, ScrollView, SafeAreaView, StyleSheet, StatusBar } from 'react-native';
+import React from "react";
+import {
+  View,
+  Text,
+  ScrollView,
+  SafeAreaView,
+  StyleSheet,
+  StatusBar,
+} from "react-native";
 
 const Dicas = () => {
   return (
@@ -20,17 +27,17 @@ const styles = StyleSheet.create({
     paddingTop: StatusBar.currentHeight,
   },
   scrollView: {
-    backgroundColor: 'gray',
+    backgroundColor: "gray",
     marginHorizontal: 20,
   },
   screenContainer: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   text: {
     fontSize: 18,
-    color: 'black',
+    color: "black",
   },
 });
 

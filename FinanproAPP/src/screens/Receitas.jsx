@@ -1,7 +1,6 @@
-import { View, Text } from 'react-native';
-import StyleReceitas from '../styles/StyleReceitas';
-import CardItem from '../components/CardItem';
-import CustomButton from '../components/CustomButton'; // Incluído conforme a necessidade
+import { View, Text } from "react-native";
+import CardItem from "../components/CardItem";
+import CustomButton from "../components/CustomButton"; // Incluído conforme a necessidade
 
 export default function Receitas({ navigation }) {
   return (
@@ -17,8 +16,8 @@ export default function Receitas({ navigation }) {
         tags={["Alimentos", "Supermercado"]}
         style={styles.CardItem} // Aplicando o estilo do item do cartão
       />
-      <CustomButton 
-        onPress={() => console.log('Ação do botão')}
+      <CustomButton
+        onPress={() => console.log("Ação do botão")}
         title="Adicionar Receita"
       />
     </View>

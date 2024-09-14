@@ -1,28 +1,31 @@
+// src/styles/styles.js
 import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
+  // Estilos gerais
   container: {
     flex: 1,
-    justifyContent: 'flex-end', // Modificado para acomodar a barra de navegação no final
-    backgroundColor: '#e0f7fa', // Cor de fundo da tela
-    padding: 20, // Ajustado para não interferir com a barra de navegação
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    paddingTop: 20,
+    backgroundColor: '#e0f7fa',
   },
   title: {
     fontSize: 28,
     fontWeight: '700',
     marginBottom: 30,
     color: '#00796b',
-    position: 'absolute', // Posicionado absolutamente para não ser afetado pelo fluxo do layout
-    top: 30, // Posicionado no topo com espaçamento
-    alignSelf: 'center', // Centraliza no topo
+    position: 'absolute',
+    top: 30,
+    alignSelf: 'center',
   },
   userText: {
     fontSize: 20,
     marginBottom: 25,
     color: '#004d40',
-    position: 'absolute', // Posicionado absolutamente
-    top: 70, // Abaixo do título
-    alignSelf: 'center', // Centraliza
+    position: 'absolute',
+    top: 70,
+    alignSelf: 'center',
   },
   buttonContainer: {
     marginVertical: 15,
@@ -31,9 +34,9 @@ export default StyleSheet.create({
     backgroundColor: '#004d40',
     overflow: 'hidden',
     alignItems: 'center',
-    position: 'absolute', // Posicionado absolutamente
-    bottom: 120, // Acima do navigation
-    alignSelf: 'center', // Centraliza horizontalmente
+    position: 'absolute',
+    bottom: 120,
+    alignSelf: 'center',
   },
   input: {
     height: 45,
@@ -44,14 +47,14 @@ export default StyleSheet.create({
     marginBottom: 25,
     width: 260,
     backgroundColor: '#ffffff',
-    position: 'absolute', // Posicionado absolutamente
-    bottom: 160, // Acima do botão
-    alignSelf: 'center', // Centraliza
+    position: 'absolute',
+    bottom: 160,
+    alignSelf: 'center',
   },
   fab: {
     position: 'absolute',
     right: 16,
-    bottom: 90, // Ajustado para não sobrepor a barra de navegação
+    bottom: 90,
     backgroundColor: '#f59330',
     borderRadius: 30,
     width: 60,
@@ -70,14 +73,14 @@ export default StyleSheet.create({
     backgroundColor: '#f0f0f0',
     paddingBottom: 10,
     paddingTop: 10,
-    height: 50, // Define a altura da barra de navegação
+    height: 50,
   },
   navButton: {
     flex: 1,
     alignItems: 'center',
   },
   placeholderButton: {
-    width: 60, // Mantém o layout balanceado
+    width: 60,
   },
   screen: {
     flex: 1,
@@ -92,4 +95,80 @@ export default StyleSheet.create({
     elevation: 5,
   },
 
+  // Estilos dos cartões
+  card: {
+    backgroundColor: '#fff',
+    padding: 15,
+    borderRadius: 8,
+    marginBottom: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 5,
+    elevation: 3,
+    width: '90%',
+  },
+  iconContainer: {
+    marginBottom: 10,
+  },
+  content: {},
+  title: {
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  description: {
+    fontSize: 14,
+    color: '#666',
+  },
+  details: {
+    marginTop: 10,
+  },
+  value: {
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  status: {
+    fontSize: 14,
+    color: '#00796b',
+  },
+  date: {
+    fontSize: 12,
+    color: '#999',
+  },
+  tagsContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
+  tag: {
+    backgroundColor: '#e0f2f1',
+    color: '#00796b',
+    borderRadius: 5,
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    margin: 2,
+    fontSize: 12,
+  },
+  receitaCard: {
+    borderColor: '#4caf50',
+    borderWidth: 1,
+  },
+  despesaCard: {
+    borderColor: '#f44336',
+    borderWidth: 1,
+  },
+  receitaValue: {
+    color: '#4caf50',
+  },
+  despesaValue: {
+    color: '#f44336',
+  },
+  // Estilo dos botões de ação no cartão
+  actions: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 10,
+  },
+  actionButton: {
+    padding: 10,
+  },
 });

@@ -1,11 +1,11 @@
-import React from 'react'; 
-import { View, Text, TouchableOpacity } from 'react-native';
+import React from 'react';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import styles from '../styles/styles';
 
-const Card = ({ icon, title, description, value, status, date, tags }) => {
+const CardItem = ({ icon, title, description, value, status, date, tags, onEdit, onDelete }) => {
   return (
-    <TouchableOpacity style={styles.card}>
+    <View style={[styles.card, styles.shadow]}>
       <View style={styles.iconContainer}>
         <AntDesign name={icon} size={24} color="#00796b" />
       </View>
@@ -25,8 +25,27 @@ const Card = ({ icon, title, description, value, status, date, tags }) => {
           ))}
         </View>
       </View>
-    </TouchableOpacity>
+      <View style={styles.actions}>
+        <TouchableOpacity onPress={onEdit} style={styles.actionButton}>
+          <AntDesign name="edit" size={24} color="#4caf50" />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={onDelete} style={styles.actionButton}>
+          <AntDesign name="delete" size={24} color="#f44336" />
+        </TouchableOpacity>
+      </View>
+    </View>
   );
 };
 
-export default Card;
+const localStyles = StyleSheet.create({
+  actions: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 10,
+  },
+  actionButton: {
+    padding: 10,
+  },
+});
+
+export default CardItem;

@@ -1,7 +1,7 @@
-import React from 'react';
-import { View, Text } from 'react-native';
-import styles from '../styles/styles';
-import CardItem from '../components/CardItem';
+import React from "react";
+import { View, Text } from "react-native";
+import styles from "../styles/styles";
+import CardItem from "../components/CardItem";
 
 export default function Despesas({ navigation }) {
   return (

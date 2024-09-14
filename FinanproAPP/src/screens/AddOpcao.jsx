@@ -1,8 +1,8 @@
 // src/screens/AddOpcao.js
-import React, { useState } from 'react';
-import { View, StyleSheet, Text, TouchableOpacity, Modal } from 'react-native';
-import { AntDesign } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native'; // Importa useNavigation
+import React, { useState } from "react";
+import { View, StyleSheet, Text, TouchableOpacity, Modal } from "react-native";
+import { AntDesign } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native"; // Importa useNavigation
 
 const AddOpcao = () => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -10,11 +10,11 @@ const AddOpcao = () => {
 
   const navigateToAddReceita = () => {
     setModalVisible(false);
-    navigation.navigate('AddReceita'); // Navega para a tela AddReceita
+    navigation.navigate("AddReceita"); // Navega para a tela AddReceita
   };
   const navigateToAddDespesas = () => {
     setModalVisible(false);
-    navigation.navigate('AddDespesas'); // Navega para a tela AddDespesas
+    navigation.navigate("AddDespesas"); // Navega para a tela AddDespesas
   };
 
   return (
@@ -28,11 +28,17 @@ const AddOpcao = () => {
       >
         <View style={styles.modalContainer}>
           <View style={styles.menu}>
-            <TouchableOpacity onPress={navigateToAddReceita} style={styles.menuItem}>
+            <TouchableOpacity
+              onPress={navigateToAddReceita}
+              style={styles.menuItem}
+            >
               <AntDesign name="pluscircleo" size={20} color="white" />
               <Text style={styles.menuText}>Receita</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={navigateToAddDespesas} style={styles.menuItem}>
+            <TouchableOpacity
+              onPress={navigateToAddDespesas}
+              style={styles.menuItem}
+            >
               <AntDesign name="minuscircleo" size={20} color="white" />
               <Text style={styles.menuText}>Despesa</Text>
             </TouchableOpacity>
@@ -41,8 +47,8 @@ const AddOpcao = () => {
       </Modal>
 
       {/* Botão Flutuante */}
-      <TouchableOpacity 
-        style={styles.fab} 
+      <TouchableOpacity
+        style={styles.fab}
         onPress={() => setModalVisible(true)}
       >
         <AntDesign name="plus" size={24} color="white" />
@@ -54,42 +60,42 @@ const AddOpcao = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   fab: {
-    position: 'absolute',
-    left: '1%', // Centraliza horizontalmente
+    position: "absolute",
+    left: "1%", // Centraliza horizontalmente
     bottom: 16,
-    backgroundColor: '#E9446A', // Cor do botão flutuante
+    backgroundColor: "#E9446A", // Cor do botão flutuante
     borderRadius: 30,
     width: 60,
     height: 60,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     elevation: 8,
     transform: [{ translateX: -30 }], // Ajusta o botão flutuante para centralizar
   },
   modalContainer: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0,0,0,0.5)',
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0,0,0,0.5)",
   },
   menu: {
-    backgroundColor: '#004d40',
+    backgroundColor: "#004d40",
     borderRadius: 10,
     padding: 15,
     width: 200, // Ajuste conforme necessário
-    alignItems: 'center',
+    alignItems: "center",
   },
   menuItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     marginBottom: 10,
   },
   menuText: {
-    color: 'white',
+    color: "white",
     marginLeft: 10,
     fontSize: 18,
   },
