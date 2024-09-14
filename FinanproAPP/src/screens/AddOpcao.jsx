@@ -2,9 +2,20 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, Text, TouchableOpacity, Modal } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native'; // Importa useNavigation
 
 const AddOpcao = () => {
   const [modalVisible, setModalVisible] = useState(false);
+  const navigation = useNavigation(); // Inicializa o hook de navegação
+
+  const navigateToAddReceita = () => {
+    setModalVisible(false);
+    navigation.navigate('AddReceita'); // Navega para a tela AddReceita
+  };
+  const navigateToAddDespesas = () => {
+    setModalVisible(false);
+    navigation.navigate('AddDespesas'); // Navega para a tela AddDespesas
+  };
 
   return (
     <View style={styles.container}>
@@ -17,10 +28,13 @@ const AddOpcao = () => {
       >
         <View style={styles.modalContainer}>
           <View style={styles.menu}>
-            <MenuItem icon="pluscircleo" title="Receita" />
-            <MenuItem icon="minuscircleo" title="Despesa" />
-            <TouchableOpacity onPress={() => setModalVisible(false)} style={styles.closeButton}>
-              <Text style={styles.closeButtonText}>Fechar</Text>
+            <TouchableOpacity onPress={navigateToAddReceita} style={styles.menuItem}>
+              <AntDesign name="pluscircleo" size={20} color="white" />
+              <Text style={styles.menuText}>Receita</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={navigateToAddDespesas} style={styles.menuItem}>
+              <AntDesign name="minuscircleo" size={20} color="white" />
+              <Text style={styles.menuText}>Despesa</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -37,13 +51,6 @@ const AddOpcao = () => {
   );
 };
 
-const MenuItem = ({ icon, title }) => (
-  <TouchableOpacity style={styles.menuItem}>
-    <AntDesign name={icon} size={20} color="white" />
-    <Text style={styles.menuText}>{title}</Text>
-  </TouchableOpacity>
-);
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -52,7 +59,7 @@ const styles = StyleSheet.create({
   },
   fab: {
     position: 'absolute',
-    right: '50%',
+    left: '1%', // Centraliza horizontalmente
     bottom: 16,
     backgroundColor: '#E9446A', // Cor do botão flutuante
     borderRadius: 30,
@@ -61,7 +68,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     elevation: 8,
-    transform: [{ translateX: 30 }], // Ajusta o botão flutuante para centralizar
+    transform: [{ translateX: -30 }], // Ajusta o botão flutuante para centralizar
   },
   modalContainer: {
     flex: 1,
@@ -70,7 +77,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0,0,0,0.5)',
   },
   menu: {
-    backgroundColor: '#527FD9',
+    backgroundColor: '#004d40',
     borderRadius: 10,
     padding: 15,
     width: 200, // Ajuste conforme necessário
@@ -86,16 +93,6 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     fontSize: 18,
   },
-  closeButton: {
-    marginTop: 20,
-    padding: 10,
-    backgroundColor: '#E9446A',
-    borderRadius: 5,
-  },
-  closeButtonText: {
-    color: 'white',
-    fontSize: 16,
-  }
 });
 
 export default AddOpcao;
