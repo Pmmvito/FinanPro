@@ -2,55 +2,51 @@
 import React, { useState } from "react";
 import { View, StyleSheet, Text, TouchableOpacity, Modal } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native"; // Importa useNavigation
+import { useNavigation } from "@react-navigation/native";
 
 const AddOpcao = () => {
   const [modalVisible, setModalVisible] = useState(false);
-  const navigation = useNavigation(); // Inicializa o hook de navegação
+  const navigation = useNavigation(); 
 
   const navigateToAddReceita = () => {
     setModalVisible(false);
-    navigation.navigate("AddReceita"); // Navega para a tela AddReceita
+    navigation.navigate("AddReceita");
   };
+
   const navigateToAddDespesas = () => {
     setModalVisible(false);
-    navigation.navigate("AddDespesas"); // Navega para a tela AddDespesas
+    navigation.navigate("AddDespesas");
   };
 
   return (
     <View style={styles.container}>
       {/* Modal com opções */}
       <Modal
-        animationType="fade"
+        animationType="slide"
         transparent={true}
         visible={modalVisible}
         onRequestClose={() => setModalVisible(false)}
       >
-        <View style={styles.modalContainer}>
+        <TouchableOpacity
+          style={styles.modalContainer}
+          activeOpacity={1}
+          onPressOut={() => setModalVisible(false)}
+        >
           <View style={styles.menu}>
-            <TouchableOpacity
-              onPress={navigateToAddReceita}
-              style={styles.menuItem}
-            >
+            <TouchableOpacity onPress={navigateToAddReceita} style={styles.menuItem}>
               <AntDesign name="pluscircleo" size={20} color="white" />
               <Text style={styles.menuText}>Receita</Text>
             </TouchableOpacity>
-            <TouchableOpacity
-              onPress={navigateToAddDespesas}
-              style={styles.menuItem}
-            >
+            <TouchableOpacity onPress={navigateToAddDespesas} style={styles.menuItem}>
               <AntDesign name="minuscircleo" size={20} color="white" />
               <Text style={styles.menuText}>Despesa</Text>
             </TouchableOpacity>
           </View>
-        </View>
+        </TouchableOpacity>
       </Modal>
 
-      {/* Botão Flutuante */}
-      <TouchableOpacity
-        style={styles.fab}
-        onPress={() => setModalVisible(true)}
-      >
+      {/* Botão Flutuante Central */}
+      <TouchableOpacity style={styles.fab} onPress={() => setModalVisible(true)}>
         <AntDesign name="plus" size={24} color="white" />
       </TouchableOpacity>
     </View>
@@ -65,28 +61,26 @@ const styles = StyleSheet.create({
   },
   fab: {
     position: "absolute",
-    left: "1%", // Centraliza horizontalmente
-    bottom: 16,
-    backgroundColor: "#E9446A", // Cor do botão flutuante
+    bottom: 30,
+    backgroundColor: "#7b147b",
     borderRadius: 30,
     width: 60,
     height: 60,
     justifyContent: "center",
     alignItems: "center",
-    elevation: 8,
-    transform: [{ translateX: -30 }], // Ajusta o botão flutuante para centralizar
+    elevation: 10,
   },
   modalContainer: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "rgba(0,0,0,0.5)",
+    backgroundColor: 'rgba(0,0,0,0.5)',
   },
   menu: {
-    backgroundColor: "#004d40",
+    backgroundColor: "#7b147b",
     borderRadius: 10,
     padding: 15,
-    width: 200, // Ajuste conforme necessário
+    width: 200,
     alignItems: "center",
   },
   menuItem: {

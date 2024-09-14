@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: '50%',
     bottom: 16,
-    backgroundColor: '#E9446A', // Cor do botão flutuante
+    backgroundColor: '#f8db7e', // Cor do botão flutuante
     borderRadius: 30,
     width: 60,
     height: 60,
