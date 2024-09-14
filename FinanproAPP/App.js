@@ -14,6 +14,7 @@ import AddReceita from './src/screens/AddReceita';
 import AddDespesas from './src/screens/AddDespesas';
 import CustomTabBarButton from './src/components/CustomTabBarButton';
 import styles from './src/styles/styles';
+import { Modal } from 'react-native-paper';
 
 // Cria o Stack Navigator
 const Stack = createStackNavigator();
@@ -70,8 +71,8 @@ const MainTabNavigator = () => (
       }}
     />
     <Tab.Screen
-      name="AddOpcao"
-      component={AddOpcao}
+      name="none"
+      component={Modal}
       options={{
         tabBarIcon: ({ color }) => (
           <Icon name="add-circle-outline" color="#fff" size={30} />
