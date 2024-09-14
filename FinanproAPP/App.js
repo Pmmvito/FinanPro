@@ -15,6 +15,8 @@ import AddDespesas from './src/screens/AddDespesas';
 import CustomTabBarButton from './src/components/CustomTabBarButton';
 import styles from './src/styles/styles';
 import { Modal } from 'react-native-paper';
+import CalcularJurosSimples from './src/screens/CalcularJurosSimples';
+import CalcularJurosCompostos from './src/screens/CalcularJurosCompostos';
 
 // Cria o Stack Navigator
 const Stack = createStackNavigator();
@@ -26,8 +28,8 @@ const App = () => {
         screenOptions={{ headerShown: false }} 
       >
         <Stack.Screen name="Main" component={MainTabNavigator} />
-        <Stack.Screen name="AddReceita" component={AddReceita} /> 
-        <Stack.Screen name="AddDespesas" component={AddDespesas} /> 
+        <Stack.Screen name="AddReceita" component={CalcularJurosCompostos} /> 
+        <Stack.Screen name="AddDespesas" component={CalcularJurosSimples} /> 
       </Stack.Navigator>
     </NavigationContainer>
   );

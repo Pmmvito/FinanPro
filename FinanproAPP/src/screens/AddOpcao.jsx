@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import { View, StyleSheet, Text, TouchableOpacity, Modal } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-
 const AddOpcao = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const navigation = useNavigation(); 
@@ -17,6 +16,7 @@ const AddOpcao = () => {
     setModalVisible(false);
     navigation.navigate("AddDespesas");
   };
+
 
   return (
     <View style={styles.container}>
