@@ -17,6 +17,11 @@ const AddOpcao = () => {
     setModalVisible(false);
     navigation.navigate("AddDespesas");
   };
+  
+  const navigateToAvistaOuParcelado = () => {
+    setModalVisible(false);
+    navigation.navigate("AvistaOuParcelado");
+  };
 
   return (
     <View style={styles.container}>
@@ -40,6 +45,10 @@ const AddOpcao = () => {
             <TouchableOpacity onPress={navigateToAddDespesas} style={styles.menuItem}>
               <AntDesign name="minuscircleo" size={20} color="white" />
               <Text style={styles.menuText}>Despesa</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={navigateToAvistaOuParcelado} style={styles.menuItem}>
+              <AntDesign name="minuscircleo" size={20} color="white" />
+              <Text style={styles.menuText}>AvistaOuParcelado</Text>
             </TouchableOpacity>
           </View>
         </TouchableOpacity>

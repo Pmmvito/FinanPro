@@ -12,6 +12,7 @@ import Dicas from './src/screens/Dicas';
 import Backup from './src/screens/Backup';
 import AddReceita from './src/screens/AddReceita'; 
 import AddDespesas from './src/screens/AddDespesas';
+import AvistaOuParcelado from './src/screens/AvistaOuParcelado';
 import CustomTabBarButton from './src/components/CustomTabBarButton';
 import styles from './src/styles/styles';
 import { Modal } from 'react-native-paper';
@@ -28,6 +29,7 @@ const App = () => {
         <Stack.Screen name="Main" component={MainTabNavigator} />
         <Stack.Screen name="AddReceita" component={AddReceita} /> 
         <Stack.Screen name="AddDespesas" component={AddDespesas} /> 
+        <Stack.Screen name="AvistaOuParcelado" component={AvistaOuParcelado} />
       </Stack.Navigator>
     </NavigationContainer>
   );
