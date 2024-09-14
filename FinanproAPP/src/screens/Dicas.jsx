@@ -1,14 +1,37 @@
 // src/screens/Dicas.js
 import React from 'react';
-import { View, Text } from 'react-native';
-import styles from '../styles/styles';
+import { View, Text, ScrollView, SafeAreaView, StyleSheet, StatusBar } from 'react-native';
 
 const Dicas = () => {
   return (
-    <View style={styles.screenContainer}>
-      <Text>Dicas Screen</Text>
-    </View>
+    <SafeAreaView style={styles.container}>
+      <ScrollView style={styles.scrollView}>
+        <View style={styles.screenContainer}>
+          <Text style={styles.text}>((FALTA AS DICAS))</Text>
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingTop: StatusBar.currentHeight,
+  },
+  scrollView: {
+    backgroundColor: 'gray',
+    marginHorizontal: 20,
+  },
+  screenContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  text: {
+    fontSize: 18,
+    color: 'black',
+  },
+});
 
 export default Dicas;
