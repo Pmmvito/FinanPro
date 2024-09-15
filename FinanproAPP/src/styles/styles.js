@@ -172,25 +172,26 @@ export default StyleSheet.create({
     padding: 10,
   },
 
-  // Estilos para a barra de navegação
-  shadow: {
-    shadowColor: '#7b147b',
-    shadowOffset: { width: 0, height: 10 },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.5,
-    elevation: 5,
-  },
-  tabButton: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  activeTab: {
-    backgroundColor: '#f1e4f5',
-    borderRadius: 10,
-    padding: 10,
-  },
-  tabText: {
-    fontSize: 12,
-    marginTop: 5,
-  },
+    // Estilos para a barra de navegação
+    shadow: {
+      shadowColor: '#7b147b',
+      shadowOffset: { width: 0, height: 10 },
+      shadowOpacity: 0.25,
+      shadowRadius: 3.5,
+      elevation: 5,
+    },
+    tabButton: {
+      justifyContent: 'center',
+      alignItems: 'center',
+      padding: 5, // Reduz o padding dos botões
+    },
+    activeTab: {
+      backgroundColor: '#f1e4f5',
+      borderRadius: 10,
+      padding: 1, // Ajusta o padding do botão ativo
+    },
+    tabText: {
+      fontSize: 10, // Reduz o tamanho do texto
+      marginTop: 3, // Ajusta o espaçamento entre o ícone e o texto
+    },
 });

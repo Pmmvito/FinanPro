@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 const CalcularJurosCompostos = () => {
+    const navigation = useNavigation();
     const [principal, setPrincipal] = useState('');
     const [rate, setRate] = useState('');
     const [months, setMonths] = useState('');
@@ -24,8 +26,12 @@ const CalcularJurosCompostos = () => {
 
     return (
         <View style={styles.container}>
+            <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate('Home')}>
+                <Text style={styles.backButtonText}>Voltar para Home</Text>
+            </TouchableOpacity>
             <Text style={styles.title}>Calculadora de Juros Compostos</Text>
             <View style={styles.inputContainer}>
+
                 <Text style={styles.label}>Capital Inicial:</Text>
                 <TextInput
                     style={styles.input}
@@ -80,8 +86,9 @@ const CalcularJurosCompostos = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        justifyContent: 'center',
         padding: 20,
-        backgroundColor: '#f8f9fa',
+        backgroundColor: '#f0f4f7',
     },
     title: {
         fontSize: 26,
@@ -129,6 +136,19 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: 'bold',
         color: '#333',
+    },
+    backButton: {
+        alignSelf: 'flex-start',
+        backgroundColor: '#7b147b',
+        paddingVertical: 8,
+        paddingHorizontal: 16,
+        borderRadius: 5,
+        marginBottom: 20,
+    },
+    backButtonText: {
+        color: '#fff',
+        fontSize: 16,
+        fontWeight: 'bold',
     },
 });
 
