@@ -7,15 +7,16 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 import Home from './src/screens/Home';
 import Financeiro from './src/screens/Financeiro';
-import AddOpcao from './src/screens/AddOpcao';
+// import AddOpcao from './src/screens/AddOpcao';
 import Dicas from './src/screens/Dicas';
 import Backup from './src/screens/Backup';
-import AddReceita from './src/screens/AddReceita'; 
-import AddDespesas from './src/screens/AddDespesas';
-import AvistaOuParcelado from './src/screens/AvistaOuParcelado';
+// import AddReceita from './src/screens/AddReceita'; 
+// import AddDespesas from './src/screens/AddDespesas';
 import CustomTabBarButton from './src/components/CustomTabBarButton';
 import styles from './src/styles/styles';
 import { Modal } from 'react-native-paper';
+import CalcularJurosSimples from './src/screens/CalcularJurosSimples';
+import CalcularJurosCompostos from './src/screens/CalcularJurosCompostos';
 
 // Cria o Stack Navigator
 const Stack = createStackNavigator();
@@ -27,9 +28,8 @@ const App = () => {
         screenOptions={{ headerShown: false }} 
       >
         <Stack.Screen name="Main" component={MainTabNavigator} />
-        <Stack.Screen name="AddReceita" component={AddReceita} /> 
-        <Stack.Screen name="AddDespesas" component={AddDespesas} /> 
-        <Stack.Screen name="AvistaOuParcelado" component={AvistaOuParcelado} />
+        <Stack.Screen name="AddReceita" component={CalcularJurosCompostos} /> 
+        <Stack.Screen name="AddDespesas" component={CalcularJurosSimples} /> 
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -73,7 +73,7 @@ const MainTabNavigator = () => (
       }}
     />
     <Tab.Screen
-      name="none"
+      name="botao duplicado um vai pra essa tela outro pro menu"
       component={Modal}
       options={{
         tabBarIcon: ({ color }) => (

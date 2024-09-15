@@ -3,9 +3,9 @@ import React, { useState } from "react";
 import { View, StyleSheet, Text, TouchableOpacity, Modal } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-
 const AddOpcao = () => {
   const [modalVisible, setModalVisible] = useState(false);
+
   const navigation = useNavigation(); 
 
   const navigateToAddReceita = () => {
@@ -17,11 +17,7 @@ const AddOpcao = () => {
     setModalVisible(false);
     navigation.navigate("AddDespesas");
   };
-  
-  const navigateToAvistaOuParcelado = () => {
-    setModalVisible(false);
-    navigation.navigate("AvistaOuParcelado");
-  };
+
 
   return (
     <View style={styles.container}>
@@ -39,16 +35,12 @@ const AddOpcao = () => {
         >
           <View style={styles.menu}>
             <TouchableOpacity onPress={navigateToAddReceita} style={styles.menuItem}>
-              <AntDesign name="pluscircleo" size={20} color="white" />
-              <Text style={styles.menuText}>Receita</Text>
+              {/* <AntDesign name="pluscircleo" size={20} color="white" /> */}
+              <Text style={styles.menuText}>Calculadora de Juros</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={navigateToAddDespesas} style={styles.menuItem}>
-              <AntDesign name="minuscircleo" size={20} color="white" />
-              <Text style={styles.menuText}>Despesa</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={navigateToAvistaOuParcelado} style={styles.menuItem}>
-              <AntDesign name="minuscircleo" size={20} color="white" />
-              <Text style={styles.menuText}>AvistaOuParcelado</Text>
+              {/* <AntDesign name="minuscircleo" size={20} color="white" /> */}
+              <Text style={styles.menuText}>Calculadora</Text>
             </TouchableOpacity>
           </View>
         </TouchableOpacity>
@@ -88,8 +80,8 @@ const styles = StyleSheet.create({
   menu: {
     backgroundColor: "#7b147b",
     borderRadius: 10,
-    padding: 15,
-    width: 200,
+    padding: 20,
+    width: 300,
     alignItems: "center",
   },
   menuItem: {
