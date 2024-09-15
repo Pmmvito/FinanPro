@@ -36,11 +36,11 @@ const AddOpcao = () => {
           <View style={styles.menu}>
             <TouchableOpacity onPress={navigateToAddReceita} style={styles.menuItem}>
               {/* <AntDesign name="pluscircleo" size={20} color="white" /> */}
-              <Text style={styles.menuText}>Calculadora de Juros</Text>
+              <Text style={styles.menuText}>Calculadora de Juros Composto</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={navigateToAddDespesas} style={styles.menuItem}>
               {/* <AntDesign name="minuscircleo" size={20} color="white" /> */}
-              <Text style={styles.menuText}>Calculadora</Text>
+              <Text style={styles.menuText}>Calculadora de Juros Simples </Text>
             </TouchableOpacity>
           </View>
         </TouchableOpacity>
@@ -62,11 +62,11 @@ const styles = StyleSheet.create({
   },
   fab: {
     position: "absolute",
-    bottom: 30,
+    bottom: 20,
     backgroundColor: "#7b147b",
-    borderRadius: 30,
-    width: 60,
-    height: 60,
+    borderRadius: 60,
+    width: 70,
+    height: 70,
     justifyContent: "center",
     alignItems: "center",
     elevation: 10,
@@ -80,8 +80,8 @@ const styles = StyleSheet.create({
   menu: {
     backgroundColor: "#7b147b",
     borderRadius: 10,
-    padding: 20,
-    width: 300,
+    padding: 30,
+    width: 400,
     alignItems: "center",
   },
   menuItem: {
@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
   menuText: {
     color: "white",
     marginLeft: 10,
-    fontSize: 18,
+    fontSize: 20,
   },
 });
 

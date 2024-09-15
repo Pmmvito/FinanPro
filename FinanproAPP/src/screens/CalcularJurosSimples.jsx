@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 const CalcularJurosSimples = () => {
@@ -19,33 +19,43 @@ const CalcularJurosSimples = () => {
 
     return (
         <View style={styles.container}>
+            <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate('Home')}>
+                <Text style={styles.backButtonText}>Voltar para Home</Text>
+            </TouchableOpacity>
 
+            <Text style={styles.title}>Calculadora de Juros Simples</Text>
 
-            <Button title="Voltar para Home" onPress={() => navigation.navigate('Home')} />
-            <Text style={styles.title}>AvistaOuParcelado</Text>
             <TextInput
                 style={styles.input}
-                placeholder="Valor"
+                placeholder="Valor Inicial"
                 keyboardType="numeric"
                 value={principal}
                 onChangeText={setPrincipal}
             />
             <TextInput
                 style={styles.input}
-                placeholder="Taxa Mensal  (%)"
+                placeholder="Taxa Mensal (%)"
                 keyboardType="numeric"
                 value={rate}
                 onChangeText={setRate}
             />
             <TextInput
                 style={styles.input}
-                placeholder="Tempo (Meses)"
+                placeholder="Período (Meses)"
                 keyboardType="numeric"
                 value={time}
                 onChangeText={setTime}
             />
-            <Button title="Calculate" onPress={calculateCompoundInterest} />
-            {result && !isNaN(time) ? <Text style={styles.result}>Em {time} meses voce tera: {result}</Text> : null}
+
+            <TouchableOpacity style={styles.calculateButton} onPress={calculateCompoundInterest}>
+                <Text style={styles.calculateButtonText}>Calcular</Text>
+            </TouchableOpacity>
+
+            {result && !isNaN(time) ? (
+                <View style={styles.resultContainer}>
+                    <Text style={styles.resultText}>Em {time} meses você terá: R$ {result}</Text>
+                </View>
+            ) : null}
         </View>
     );
 };
@@ -56,26 +66,61 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         padding: 20,
-        backgroundColor: '#f5f5f5',
+        backgroundColor: '#f0f4f7',
+    },
+    backButton: {
+        alignSelf: 'flex-start',
+        backgroundColor: '#7b147b',
+        paddingVertical: 8,
+        paddingHorizontal: 16,
+        borderRadius: 5,
+        marginBottom: 20,
+    },
+    backButtonText: {
+        color: '#fff',
+        fontSize: 16,
+        fontWeight: 'bold',
     },
     title: {
-        fontSize: 24,
+        fontSize: 26,
         fontWeight: 'bold',
+        color: '#333',
         marginBottom: 20,
     },
     input: {
-        height: 40,
-        borderColor: 'gray',
+        width: '100%',
+        height: 50,
+        backgroundColor: '#fff',
+        borderColor: '#ddd',
         borderWidth: 1,
-        borderRadius: 5,
-        marginBottom: 15,
+        borderRadius: 8,
         paddingHorizontal: 10,
+        marginBottom: 15,
+    },
+    calculateButton: {
+        width: '100%',
+        backgroundColor: '#7b147b',
+        paddingVertical: 15,
+        borderRadius: 8,
+        alignItems: 'center',
+    },
+    calculateButtonText: {
+        color: '#fff',
+        fontSize: 18,
+        fontWeight: 'bold',
+    },
+    resultContainer: {
+        marginTop: 30,
+        padding: 20,
+        backgroundColor: '#e6f7ff',
+        borderRadius: 8,
+        alignItems: 'center',
         width: '100%',
     },
-    result: {
-        marginTop: 20,
-        fontSize: 18,
-        color: 'green',
+    resultText: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        color: '#333',
     },
 });
 

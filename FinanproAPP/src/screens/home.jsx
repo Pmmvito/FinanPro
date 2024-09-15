@@ -24,6 +24,24 @@ const HomeScreen = () => {
       </View>
       
       <View style={styles.section}>
+        <Text style={styles.sectionTitle}>Gráficos</Text>
+        <View style={styles.chartContainer}>
+          <LineChart
+            data={data}
+            width={screenWidth - 40}
+            height={220}
+            chartConfig={{
+              backgroundColor: '#ffffff',
+              backgroundGradientFrom: '#ffffff',
+              backgroundGradientTo: '#ffffff',
+              color: (opacity = 1) => `rgba(33, 150, 243, ${opacity})`,
+              labelColor: (opacity = 1) => `rgba(33, 33, 33, ${opacity})`,
+            }}
+            bezier
+            style={styles.chart}
+          />
+        </View>
+
 
       </View>
       

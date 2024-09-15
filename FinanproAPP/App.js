@@ -1,11 +1,11 @@
-// src/App.js
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { View, Text } from 'react-native';
 
-import Home from './src/screens/Home';
+import Home from './src/screens/home';
 import Financeiro from './src/screens/Financeiro';
 // import AddOpcao from './src/screens/AddOpcao';
 import Dicas from './src/screens/Dicas';
@@ -49,17 +49,28 @@ const MainTabNavigator = () => (
         elevation: 0,
         backgroundColor: '#ffffff',
         borderRadius: 15,
-        height: 90,
+        height: 80,
+        paddingBottom: 10,
         ...styles.shadow,
       },
+      tabBarItemStyle: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+      },
+      tabBarActiveTintColor: '#7b147b',
+      tabBarInactiveTintColor: '#777',
     }}
   >
     <Tab.Screen
       name="Home"
       component={Home}
       options={{
-        tabBarIcon: ({ color }) => (
-          <Icon name="home-outline" color={color} size={25} />
+        tabBarIcon: ({ color, focused }) => (
+          <View style={[styles.tabButton, focused ? styles.activeTab : null]}>
+            <Icon name="home-outline" color={color} size={30} />
+            <Text style={[styles.tabText, { color }]}>Home</Text>
+          </View>
         ),
       }}
     />
@@ -67,17 +78,20 @@ const MainTabNavigator = () => (
       name="Financeiro"
       component={Financeiro}
       options={{
-        tabBarIcon: ({ color }) => (
-          <Icon name="wallet-outline" color={color} size={25} />
+        tabBarIcon: ({ color, focused }) => (
+          <View style={[styles.tabButton, focused ? styles.activeTab : null]}>
+            <Icon name="wallet-outline" color={color} size={30} />
+            <Text style={[styles.tabText, { color }]}>Financeiro</Text>
+          </View>
         ),
       }}
     />
     <Tab.Screen
-      name="botao duplicado um vai pra essa tela outro pro menu"
+      name="Add"
       component={Modal}
       options={{
-        tabBarIcon: ({ color }) => (
-          <Icon name="add-circle-outline" color="#fff" size={30} />
+        tabBarIcon: ({ focused }) => (
+          <Icon name="add-circle" color={focused ? '#7b147b' : '#fff'} size={60} />
         ),
         tabBarButton: (props) => <CustomTabBarButton {...props} />,
       }}
@@ -86,8 +100,11 @@ const MainTabNavigator = () => (
       name="Dicas"
       component={Dicas}
       options={{
-        tabBarIcon: ({ color }) => (
-          <Icon name="bulb-outline" color={color} size={25} />
+        tabBarIcon: ({ color, focused }) => (
+          <View style={[styles.tabButton, focused ? styles.activeTab : null]}>
+            <Icon name="bulb-outline" color={color} size={30} />
+            <Text style={[styles.tabText, { color }]}>Dicas</Text>
+          </View>
         ),
       }}
     />
@@ -95,8 +112,11 @@ const MainTabNavigator = () => (
       name="Backup"
       component={Backup}
       options={{
-        tabBarIcon: ({ color }) => (
-          <Icon name="cloud-upload-outline" color={color} size={25} />
+        tabBarIcon: ({ color, focused }) => (
+          <View style={[styles.tabButton, focused ? styles.activeTab : null]}>
+            <Icon name="cloud-upload-outline" color={color} size={30} />
+            <Text style={[styles.tabText, { color }]}>Backup</Text>
+          </View>
         ),
       }}
     />

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity } from 'react-native';
 
 const CalcularJurosCompostos = () => {
     const [principal, setPrincipal] = useState('');
@@ -26,42 +26,48 @@ const CalcularJurosCompostos = () => {
         <View style={styles.container}>
             <Text style={styles.title}>Calculadora de Juros Compostos</Text>
             <View style={styles.inputContainer}>
-                <Text>Capital Inicial:</Text>
+                <Text style={styles.label}>Capital Inicial:</Text>
                 <TextInput
                     style={styles.input}
                     keyboardType="numeric"
                     value={principal}
                     onChangeText={setPrincipal}
+                    placeholder="Ex: 1000"
                 />
             </View>
             <View style={styles.inputContainer}>
-                <Text>Taxa de Juros Anual (%):</Text>
+                <Text style={styles.label}>Taxa de Juros Anual (%):</Text>
                 <TextInput
                     style={styles.input}
                     keyboardType="numeric"
                     value={rate}
                     onChangeText={setRate}
+                    placeholder="Ex: 5"
                 />
             </View>
             <View style={styles.inputContainer}>
-                <Text>Período (meses):</Text>
+                <Text style={styles.label}>Período (meses):</Text>
                 <TextInput
                     style={styles.input}
                     keyboardType="numeric"
                     value={months}
                     onChangeText={setMonths}
+                    placeholder="Ex: 12"
                 />
             </View>
             <View style={styles.inputContainer}>
-                <Text>Aporte Mensal:</Text>
+                <Text style={styles.label}>Aporte Mensal:</Text>
                 <TextInput
                     style={styles.input}
                     keyboardType="numeric"
                     value={monthlyContribution}
                     onChangeText={setMonthlyContribution}
+                    placeholder="Ex: 100"
                 />
             </View>
-            <Button title="Calcular" onPress={calculateCompoundInterest} />
+            <TouchableOpacity style={styles.calculateButton} onPress={calculateCompoundInterest}>
+                <Text style={styles.calculateButtonText}>Calcular</Text>
+            </TouchableOpacity>
             {result !== null && (
                 <View style={styles.resultContainer}>
                     <Text style={styles.resultText}>Resultado: R$ {result}</Text>
@@ -75,28 +81,54 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: 20,
-        backgroundColor: '#fff',
+        backgroundColor: '#f8f9fa',
     },
     title: {
-        fontSize: 24,
+        fontSize: 26,
         fontWeight: 'bold',
+        color: '#333',
+        textAlign: 'center',
         marginBottom: 20,
     },
     inputContainer: {
         marginBottom: 15,
     },
-    input: {
-        height: 40,
-        borderColor: 'gray',
-        borderWidth: 1,
-        paddingLeft: 8,
+    label: {
+        fontSize: 16,
+        color: '#555',
+        marginBottom: 5,
     },
-    resultContainer: {
+    input: {
+        height: 45,
+        borderColor: '#ccc',
+        borderWidth: 1,
+        borderRadius: 8,
+        paddingHorizontal: 10,
+        backgroundColor: '#fff',
+    },
+    calculateButton: {
+        backgroundColor: '#7b147b',
+        paddingVertical: 12,
+        borderRadius: 8,
+        alignItems: 'center',
         marginTop: 20,
     },
-    resultText: {
+    calculateButtonText: {
+        color: '#fff',
         fontSize: 18,
         fontWeight: 'bold',
+    },
+    resultContainer: {
+        marginTop: 30,
+        padding: 15,
+        backgroundColor: '#e0e4e5',
+        borderRadius: 8,
+        alignItems: 'center',
+    },
+    resultText: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        color: '#333',
     },
 });
 

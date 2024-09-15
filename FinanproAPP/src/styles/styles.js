@@ -171,4 +171,26 @@ export default StyleSheet.create({
   actionButton: {
     padding: 10,
   },
+
+  // Estilos para a barra de navegação
+  shadow: {
+    shadowColor: '#7b147b',
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.5,
+    elevation: 5,
+  },
+  tabButton: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  activeTab: {
+    backgroundColor: '#f1e4f5',
+    borderRadius: 10,
+    padding: 10,
+  },
+  tabText: {
+    fontSize: 12,
+    marginTop: 5,
+  },
 });
