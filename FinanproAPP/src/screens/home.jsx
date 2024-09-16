@@ -255,7 +255,7 @@ const HomeScreen = () => {
         visible={editModalVisible}
         onRequestClose={() => setEditModalVisible(false)}
       >
-        <View style={styles.modalView}>
+        <View style={styles.modalViewEditar}>
           <Text style={styles.modalText}>Editar Transação</Text>
           <TextInput
             style={styles.input}
@@ -422,6 +422,23 @@ const styles = StyleSheet.create({
     shadowRadius: 10,
     elevation: 5,
   },
+  modalViewEditar: {
+    width: screenWidth * 0.9,
+    backgroundColor: '#fff',
+    borderRadius: 20,
+    padding: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    position: 'absolute',
+    top: '30%',
+    left: '5%',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 6 },  // Aumenta a altura da sombra
+    shadowOpacity: 0.5,  // Aumenta a opacidade da sombra
+    shadowRadius: 15,  // Aumenta o raio da sombra
+    elevation: 10,  // Aumenta a elevação para dispositivos Android
+  },
+  
   modalTitle: {
     fontSize: 18,
     fontWeight: 'bold',
@@ -450,7 +467,7 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     paddingHorizontal: 8,
     marginBottom: 8,
-    color: '#fff',
+    color: '#000000',
   },
   button: {
     backgroundColor: '#007bff',
@@ -493,6 +510,7 @@ const styles = StyleSheet.create({
   footerSpacing: {
     height: 50,
   },
+  
 });
 
 export default HomeScreen;
