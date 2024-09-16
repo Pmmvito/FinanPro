@@ -280,21 +280,22 @@ const HomeScreen = () => {
       </Modal>
 
       <Modal
-        animationType="slide"
-        transparent={true}
-        visible={chartModalVisible}
-        onRequestClose={() => setChartModalVisible(false)}
-      >
+      animationType="slide"
+      transparent={true}
+      visible={chartModalVisible}
+      onRequestClose={() => setChartModalVisible(false)}
+    >
+      <View style={styles.modalOverlay}>
         <View style={styles.modalView}>
-          <Text style={styles.modalText}>Gráfico Mensal de {currentYear}</Text>
+          <Text style={styles.modalTitle}>Gráfico Mensal de {currentYear}</Text>
           <LineChart
             data={{
-              labels: Array.from({ length: 12 }, (_, i) => `${new Date(currentYear, i).toLocaleString('default', { month: 'short' })} ${currentYear}`),
+              labels: Array.from({ length: 12 }, (_, i) => `${new Date(currentYear, i).toLocaleString('default', { month: 'short' })}`),
               datasets: [
                 {
-                  data: monthlyBalances
-                }
-              ]
+                  data: monthlyBalances,
+                },
+              ],
             }}
             width={screenWidth * 0.9}
             height={220}
@@ -305,15 +306,17 @@ const HomeScreen = () => {
               backgroundGradientTo: '#fff',
               color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
               labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-              strokeWidth: 2
+              strokeWidth: 2,
             }}
             bezier
+            style={styles.chart}
           />
           <TouchableOpacity style={styles.button} onPress={() => setChartModalVisible(false)}>
             <Text style={styles.buttonText}>Fechar</Text>
           </TouchableOpacity>
         </View>
-      </Modal>
+      </View>
+    </Modal>
 
       <FlatList
         data={showIncomeList ? incomeTransactions : expenseTransactions}
@@ -401,16 +404,43 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 16,
   },
-  modalView: {
+  modalOverlay: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Overlay background color
   },
-  modalText: {
+  modalView: {
+    width: screenWidth * 0.9,
+    backgroundColor: '#fff',
+    borderRadius: 20,
+    padding: 20,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 10,
+    elevation: 5,
+  },
+  modalTitle: {
     fontSize: 18,
-    marginBottom: 10,
+    fontWeight: 'bold',
+    marginBottom: 15,
+    textAlign: 'center',
+  },
+  chart: {
+    marginVertical: 8,
+    borderRadius: 16,
+  },
+  button: {
+    marginTop: 20,
+    backgroundColor: '#007bff',
+    padding: 10,
+    borderRadius: 8,
+  },
+  buttonText: {
     color: '#fff',
+    fontSize: 16,
   },
   input: {
     height: 40,
