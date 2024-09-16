@@ -8,17 +8,17 @@ const AddOpcao = () => {
 
   const navigation = useNavigation(); 
 
-  const navigateToCalculadoradeJurosCompostos = () => {
+  const navigateToCalcularJurosCompostos = () => {
     setModalVisible(false);
-    navigation.navigate("Calculadora de Juros Compostos");
+    navigation.navigate("CalcularJurosCompostos");
   };
-  const navigateToACalculadoradeJurosSimples = () => {
+  const navigateToACalcularJurosSimples = () => {
     setModalVisible(false);
-    navigation.navigate("Calculadora de Juros Simples");
+    navigation.navigate("CalcularJurosSimples");
   };
   const navigateToAcompanharRendimentoCdi = () => {
     setModalVisible(false);
-    navigation.navigate("Acompanhar Rendimento Cdi");
+    navigation.navigate("AcompanharRendimentoCdi");
   };
 
   return (
@@ -36,11 +36,11 @@ const AddOpcao = () => {
           onPressOut={() => setModalVisible(false)}
         >
           <View style={styles.menu}>
-            <TouchableOpacity onPress={navigateToCalculadoradeJurosCompostos} style={styles.menuItem}>
+            <TouchableOpacity onPress={navigateToCalcularJurosCompostos} style={styles.menuItem}>
               {/* <AntDesign name="pluscircleo" size={20} color="white" /> */}
               <Text style={styles.menuText}>Calculadora de Juros Composto</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={navigateToACalculadoradeJurosSimples} style={styles.menuItem}>
+            <TouchableOpacity onPress={navigateToACalcularJurosSimples} style={styles.menuItem}>
               {/* <AntDesign name="minuscircleo" size={20} color="white" /> */}
               <Text style={styles.menuText}>Calculadora de Juros Simples </Text>
             </TouchableOpacity>
