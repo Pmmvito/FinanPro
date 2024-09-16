@@ -16,13 +16,14 @@ const HomeScreen = () => {
   const [selectedTransaction, setSelectedTransaction] = useState(null);
   const [transactions, setTransactions] = useState([]);
   const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
+  const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
   const [monthlyBalances, setMonthlyBalances] = useState(Array(12).fill(0));
   const [chartModalVisible, setChartModalVisible] = useState(false);
   const [showIncomeList, setShowIncomeList] = useState(true);
 
   useEffect(() => {
     loadData();
-  }, [currentMonth]);
+  }, [currentMonth, currentYear]);
 
   useEffect(() => {
     loadMonthlyBalances();
@@ -30,7 +31,7 @@ const HomeScreen = () => {
 
   const loadData = async () => {
     try {
-      const data = await AsyncStorage.getItem(`@transactions_${currentMonth}`);
+      const data = await AsyncStorage.getItem(`@transactions_${currentYear}_${currentMonth}`);
       if (data !== null) {
         const parsedData = JSON.parse(data);
         setTransactions(parsedData.transactions);
@@ -48,7 +49,7 @@ const HomeScreen = () => {
     try {
       const balances = [];
       for (let i = 0; i < 12; i++) {
-        const data = await AsyncStorage.getItem(`@transactions_${i}`);
+        const data = await AsyncStorage.getItem(`@transactions_${currentYear}_${i}`);
         if (data !== null) {
           const parsedData = JSON.parse(data);
           balances.push(parsedData.balance);
@@ -68,7 +69,7 @@ const HomeScreen = () => {
         transactions: newTransactions,
         balance: newBalance,
       };
-      await AsyncStorage.setItem(`@transactions_${currentMonth}`, JSON.stringify(data));
+      await AsyncStorage.setItem(`@transactions_${currentYear}_${currentMonth}`, JSON.stringify(data));
       loadMonthlyBalances();
     } catch (error) {
       console.error(error);
@@ -148,11 +149,23 @@ const HomeScreen = () => {
   const expenseTransactions = transactions.filter(transaction => transaction.type === 'Despesa');
 
   const handlePreviousMonth = () => {
-    setCurrentMonth((prevMonth) => (prevMonth === 0 ? 11 : prevMonth - 1));
+    setCurrentMonth((prevMonth) => {
+      if (prevMonth === 0) {
+        setCurrentYear(prevYear => prevYear - 1);
+        return 11;
+      }
+      return prevMonth - 1;
+    });
   };
 
   const handleNextMonth = () => {
-    setCurrentMonth((prevMonth) => (prevMonth === 11 ? 0 : prevMonth + 1));
+    setCurrentMonth((prevMonth) => {
+      if (prevMonth === 11) {
+        setCurrentYear(prevYear => prevYear + 1);
+        return 0;
+      }
+      return prevMonth + 1;
+    });
   };
 
   const renderTransactionItem = ({ item }) => (
@@ -171,18 +184,39 @@ const HomeScreen = () => {
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.title}>Controle Financeiro</Text>
-        <Text style={styles.balance}>Saldo do Mês Atual</Text>
+        <Text style={styles.balance}>Saldo do {new Date(currentYear, currentMonth).toLocaleString('default', { month: 'long' })} {currentYear}</Text>
         <Text style={styles.balanceAmount}>R$ {balance.toFixed(2)}</Text>
-        <Button title="Adicionar Receita" onPress={() => { setIsIncome(true); setModalVisible(true); }} />
-        <Button title="Adicionar Despesa" onPress={() => { setIsIncome(false); setModalVisible(true); }} />
+        <TouchableOpacity
+          style={[styles.addButton, { backgroundColor: '#28a745' }]} // Verde para receitas
+          onPress={() => { setIsIncome(true); setModalVisible(true); }}
+        >
+          <Text style={styles.addButtonText}>Adicionar Receita</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.addButton, { backgroundColor: '#dc3545' }]} // Vermelho para despesas
+          onPress={() => { setIsIncome(false); setModalVisible(true); }}
+        >
+          <Text style={styles.addButtonText}>Adicionar Despesa</Text>
+        </TouchableOpacity>
+
         <View style={styles.monthNavigation}>
-          <Button title="Mês Anterior" onPress={handlePreviousMonth} />
-          <Text style={styles.monthText}>{new Date(2021, currentMonth).toLocaleString('default', { month: 'long' })}</Text>
-          <Button title="Próximo Mês" onPress={handleNextMonth} />
+          <TouchableOpacity style={styles.navigationButton} onPress={handlePreviousMonth}>
+            <Text style={styles.navigationButtonText}>Mês Anterior</Text>
+          </TouchableOpacity>
+          <Text style={styles.monthText}>{new Date(currentYear, currentMonth).toLocaleString('default', { month: 'long' })} {currentYear}</Text>
+          <TouchableOpacity style={styles.navigationButton} onPress={handleNextMonth}>
+            <Text style={styles.navigationButtonText}>Próximo Mês</Text>
+          </TouchableOpacity>
         </View>
-        <Button title="Ver Gráfico" onPress={() => setChartModalVisible(true)} />
-        <Button title="Ver Lista de Receitas" onPress={() => setShowIncomeList(true)} />
-        <Button title="Ver Lista de Despesas" onPress={() => setShowIncomeList(false)} />
+        <TouchableOpacity style={styles.chartButton} onPress={() => setChartModalVisible(true)}>
+          <Text style={styles.chartButtonText}>Ver Gráfico</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.listButton} onPress={() => setShowIncomeList(true)}>
+          <Text style={styles.listButtonText}>Ver Receitas</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.listButton} onPress={() => setShowIncomeList(false)}>
+          <Text style={styles.listButtonText}>Ver Despesas</Text>
+        </TouchableOpacity>
       </View>
 
       <Modal
@@ -207,7 +241,7 @@ const HomeScreen = () => {
             keyboardType="numeric"
           />
           <TouchableOpacity style={styles.button} onPress={handleAdd}>
-            <Text style={styles.buttonText}>Adicionar</Text>
+            <Text style={styles.buttonText}>Salvar</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.button} onPress={() => setModalVisible(false)}>
             <Text style={styles.buttonText}>Cancelar</Text>
@@ -252,39 +286,28 @@ const HomeScreen = () => {
         onRequestClose={() => setChartModalVisible(false)}
       >
         <View style={styles.modalView}>
-          <Text style={styles.modalText}>Saldo Mensal</Text>
+          <Text style={styles.modalText}>Gráfico Mensal de {currentYear}</Text>
           <LineChart
             data={{
-              labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+              labels: Array.from({ length: 12 }, (_, i) => `${new Date(currentYear, i).toLocaleString('default', { month: 'short' })} ${currentYear}`),
               datasets: [
                 {
-                  data: monthlyBalances,
-                },
-              ],
+                  data: monthlyBalances
+                }
+              ]
             }}
-            width={screenWidth - 40}
+            width={screenWidth * 0.9}
             height={220}
-            yAxisLabel="R$"
+            yAxisLabel="R$ "
             chartConfig={{
-              backgroundColor: '#e26a00',
-              backgroundGradientFrom: '#fb8c00',
-              backgroundGradientTo: '#ffa726',
-              decimalPlaces: 2,
-              color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-              labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-              style: {
-                borderRadius: 16,
-              },
-              propsForDots: {
-                r: '6',
-                strokeWidth: '2',
-                stroke: '#ffa726',
-              },
+              backgroundColor: '#fff',
+              backgroundGradientFrom: '#fff',
+              backgroundGradientTo: '#fff',
+              color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+              labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+              strokeWidth: 2
             }}
-            style={{
-              marginVertical: 8,
-              borderRadius: 16,
-            }}
+            bezier
           />
           <TouchableOpacity style={styles.button} onPress={() => setChartModalVisible(false)}>
             <Text style={styles.buttonText}>Fechar</Text>
@@ -294,12 +317,11 @@ const HomeScreen = () => {
 
       <FlatList
         data={showIncomeList ? incomeTransactions : expenseTransactions}
-        keyExtractor={(item) => item.id.toString()}
         renderItem={renderTransactionItem}
-        ListHeaderComponent={() => (
-          <Text style={styles.sectionTitle}>{showIncomeList ? 'Receitas' : 'Despesas'}</Text>
-        )}
+        keyExtractor={(item) => item.id.toString()}
+        style={styles.transactionList}
       />
+      <View style={styles.footerSpacing} />
     </View>
   );
 };
@@ -307,111 +329,139 @@ const HomeScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f8f9fa', // Fundo mais claro
-    padding: 20,
+    padding: 10,
+    backgroundColor: '#f5f5f5',
+    paddingBottom: 50, // Adiciona espaço na parte inferior
   },
   header: {
-    marginBottom: 30,
-    alignItems: 'center',
+    marginBottom: 10,
   },
   title: {
-    fontSize: 28,
+    fontSize: 20,
     fontWeight: 'bold',
-    color: '#343a40', // Título escuro
+    marginBottom: 5,
   },
   balance: {
-    fontSize: 18,
-    color: '#6c757d', // Cor suave para o subtítulo
-    marginTop: 10,
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginBottom: 2,
   },
   balanceAmount: {
-    fontSize: 28,
+    fontSize: 20,
     fontWeight: 'bold',
-    color: '#28a745', // Verde para indicar saldo positivo
-    marginTop: 5,
+    marginBottom: 10,
+  },
+  addButton: {
+    padding: 8,
+    borderRadius: 4,
+    marginBottom: 5,
+    alignItems: 'center',
+  },
+  addButtonText: {
+    color: '#fff',
+    fontSize: 16,
+  },
+  monthNavigation: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginVertical: 5,
+  },
+  navigationButton: {
+    padding: 8,
+    backgroundColor: '#007bff',
+    borderRadius: 4,
+  },
+  navigationButtonText: {
+    color: '#fff',
+    fontSize: 14,
+  },
+  monthText: {
+    fontSize: 16,
+    alignSelf: 'center',
+  },
+  chartButton: {
+    backgroundColor: '#17a2b8',
+    padding: 8,
+    borderRadius: 4,
+    marginVertical: 5,
+    alignItems: 'center',
+  },
+  chartButtonText: {
+    color: '#fff',
+    fontSize: 16,
+  },
+  listButton: {
+    backgroundColor: '#007bff',
+    padding: 8,
+    borderRadius: 4,
+    marginVertical: 3,
+    alignItems: 'center',
+  },
+  listButtonText: {
+    color: '#fff',
+    fontSize: 16,
   },
   modalView: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(0,0,0,0.6)', // Fundo mais escuro para foco
-    padding: 20,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   modalText: {
-    fontSize: 22,
-    marginBottom: 20,
-    color: 'white',
-    fontWeight: 'bold',
+    fontSize: 18,
+    marginBottom: 10,
+    color: '#fff',
   },
   input: {
-    width: '90%',
-    padding: 15,
-    marginBottom: 15,
-    backgroundColor: '#ffffff',
-    borderRadius: 8,
-    borderColor: '#ced4da',
+    height: 40,
+    width: 280,
+    borderColor: '#ccc',
     borderWidth: 1,
+    borderRadius: 4,
+    paddingHorizontal: 8,
+    marginBottom: 8,
+    color: '#fff',
   },
   button: {
-    backgroundColor: '#007bff', // Azul para o botão
-    padding: 15,
-    borderRadius: 8,
-    marginVertical: 10,
-    width: '90%',
+    backgroundColor: '#007bff',
+    padding: 8,
+    borderRadius: 4,
+    marginBottom: 8,
     alignItems: 'center',
+    width: 280,
   },
   buttonText: {
-    color: 'white',
-    fontSize: 18,
-    fontWeight: '600',
+    color: '#fff',
+    fontSize: 16,
   },
   transactionItem: {
-    padding: 15,
-    backgroundColor: '#ffffff',
-    borderRadius: 8,
-    marginBottom: 10,
-    borderColor: '#dee2e6',
-    borderWidth: 1,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 3.84,
-    elevation: 3,
-  },
-  transactionText: {
-    fontSize: 16,
-    color: '#495057', // Cor neutra
-  },
-  sectionTitle: {
-    fontSize: 22,
-    fontWeight: 'bold',
-    color: '#343a40',
-    marginBottom: 15,
-    marginTop: 20,
-  },
-  monthNavigation: {
+    padding: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ddd',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginTop: 20,
-    width: '90%',
   },
-  monthText: {
-    fontSize: 18,
-    fontWeight: '600',
-    color: '#495057',
+  transactionText: {
+    fontSize: 14,
   },
   editButton: {
-    backgroundColor: '#ffc107', // Amarelo para editar
-    padding: 5, // Diminuir o padding para deixar o botão menor
-    borderRadius: 5,
-    marginTop: 5, // Diminuir a margem superior
+    backgroundColor: '#ffc107',
+    padding: 5,
+    borderRadius: 4,
+    marginRight: 5,
   },
   deleteButton: {
-    backgroundColor: '#dc3545', // Vermelho para excluir
-    padding: 5, // Diminuir o padding para deixar o botão menor
-    borderRadius: 5,
-    marginTop: 5, // Diminuir a margem superior
+    backgroundColor: '#dc3545',
+    padding: 5,
+    borderRadius: 4,
+  },
+  transactionList: {
+    flex: 1,
+    marginBottom: 50, // Ajuste o valor conforme necessário
+  },
+  footerSpacing: {
+    height: 50,
   },
 });
 
