@@ -225,7 +225,7 @@ const HomeScreen = () => {
         visible={modalVisible}
         onRequestClose={() => setModalVisible(false)}
       >
-        <View style={styles.modalView}>
+        <View style={styles.modalViewEditar}>
           <Text style={styles.modalText}>{isIncome ? 'Adicionar Receita' : 'Adicionar Despesa'}</Text>
           <TextInput
             style={styles.input}
