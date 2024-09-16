@@ -3,19 +3,21 @@ import React, { useState } from "react";
 import { View, StyleSheet, Text, TouchableOpacity, Modal } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+
 const AddOpcao = () => {
   const [modalVisible, setModalVisible] = useState(false);
-
-  const navigation = useNavigation(); 
+  const navigation = useNavigation();
 
   const navigateToCalcularJurosCompostos = () => {
     setModalVisible(false);
     navigation.navigate("CalcularJurosCompostos");
   };
-  const navigateToACalcularJurosSimples = () => {
+
+  const navigateToCalcularJurosSimples = () => {
     setModalVisible(false);
     navigation.navigate("CalcularJurosSimples");
   };
+
   const navigateToAcompanharRendimentoCdi = () => {
     setModalVisible(false);
     navigation.navigate("AcompanharRendimentoCdi");
@@ -23,6 +25,11 @@ const AddOpcao = () => {
 
   return (
     <View style={styles.container}>
+      {/* Botão Flutuante Central */}
+      <TouchableOpacity style={styles.fab} onPress={() => setModalVisible(true)}>
+        <AntDesign name="calculator" size={24} color="white" />
+      </TouchableOpacity>
+
       {/* Modal com opções */}
       <Modal
         animationType="slide"
@@ -37,25 +44,17 @@ const AddOpcao = () => {
         >
           <View style={styles.menu}>
             <TouchableOpacity onPress={navigateToCalcularJurosCompostos} style={styles.menuItem}>
-              {/* <AntDesign name="pluscircleo" size={20} color="white" /> */}
               <Text style={styles.menuText}>Calculadora de Juros Composto</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={navigateToACalcularJurosSimples} style={styles.menuItem}>
-              {/* <AntDesign name="minuscircleo" size={20} color="white" /> */}
-              <Text style={styles.menuText}>Calculadora de Juros Simples </Text>
+            <TouchableOpacity onPress={navigateToCalcularJurosSimples} style={styles.menuItem}>
+              <Text style={styles.menuText}>Calculadora de Juros Simples</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={navigateToAcompanharRendimentoCdi} style={styles.menuItem}>
-              {/* <AntDesign name="minuscircleo" size={20} color="white" /> */}
-              <Text style={styles.menuText}>Acompanhar Rendimento Cdi</Text>
+              <Text style={styles.menuText}>Acompanhar Rendimento CDI</Text>
             </TouchableOpacity>
           </View>
         </TouchableOpacity>
       </Modal>
-
-      {/* Botão Flutuante Central */}
-      <TouchableOpacity style={styles.fab} onPress={() => setModalVisible(true)}>
-        <AntDesign name="plus" size={24} color="white" />
-      </TouchableOpacity>
     </View>
   );
 };
@@ -70,7 +69,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 20,
     backgroundColor: "#7b147b",
-    borderRadius: 60,
+    borderRadius: 30,
     width: 60,
     height: 60,
     justifyContent: "center",
@@ -87,17 +86,14 @@ const styles = StyleSheet.create({
     backgroundColor: "#7b147b",
     borderRadius: 10,
     padding: 30,
-    width: 400,
+    width: 300,
     alignItems: "center",
   },
   menuItem: {
-    flexDirection: "row",
-    alignItems: "center",
     marginBottom: 10,
   },
   menuText: {
     color: "white",
-    marginLeft: 10,
     fontSize: 20,
   },
 });
