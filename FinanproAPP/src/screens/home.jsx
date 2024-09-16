@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Button, Modal, TextInput, TouchableOpacity, FlatList } from 'react-native';
+import { View, Text, StyleSheet, Button, Modal, TextInput, TouchableOpacity, FlatList, Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { LineChart } from 'react-native-chart-kit';
 import { Dimensions } from 'react-native';
@@ -9,9 +9,11 @@ const screenWidth = Dimensions.get('window').width;
 const HomeScreen = () => {
   const [balance, setBalance] = useState(0);
   const [modalVisible, setModalVisible] = useState(false);
+  const [editModalVisible, setEditModalVisible] = useState(false);
   const [isIncome, setIsIncome] = useState(true);
   const [name, setName] = useState('');
   const [amount, setAmount] = useState('');
+  const [selectedTransaction, setSelectedTransaction] = useState(null);
   const [transactions, setTransactions] = useState([]);
   const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
   const [monthlyBalances, setMonthlyBalances] = useState(Array(12).fill(0));
@@ -93,6 +95,55 @@ const HomeScreen = () => {
     setAmount('');
   };
 
+  const handleEdit = () => {
+    const value = parseFloat(amount);
+    if (!isNaN(value) && selectedTransaction) {
+      const updatedTransactions = transactions.map(transaction =>
+        transaction.id === selectedTransaction.id
+          ? { ...transaction, name, amount: value }
+          : transaction
+      );
+      const newBalance = updatedTransactions.reduce((acc, transaction) =>
+        transaction.type === 'Receita'
+          ? acc + transaction.amount
+          : acc - transaction.amount,
+        0
+      );
+      setTransactions(updatedTransactions);
+      setBalance(newBalance);
+      saveData(updatedTransactions, newBalance);
+      setEditModalVisible(false);
+    }
+  };
+
+  const handleDelete = (transaction) => {
+    Alert.alert(
+      'Excluir Transação',
+      `Você tem certeza que deseja excluir ${transaction.name}?`,
+      [
+        {
+          text: 'Cancelar',
+          style: 'cancel'
+        },
+        {
+          text: 'Excluir',
+          onPress: () => {
+            const newTransactions = transactions.filter(t => t.id !== transaction.id);
+            const newBalance = newTransactions.reduce((acc, transaction) =>
+              transaction.type === 'Receita'
+                ? acc + transaction.amount
+                : acc - transaction.amount,
+              0
+            );
+            setTransactions(newTransactions);
+            setBalance(newBalance);
+            saveData(newTransactions, newBalance);
+          }
+        }
+      ]
+    );
+  };
+
   const incomeTransactions = transactions.filter(transaction => transaction.type === 'Receita');
   const expenseTransactions = transactions.filter(transaction => transaction.type === 'Despesa');
 
@@ -107,11 +158,13 @@ const HomeScreen = () => {
   const renderTransactionItem = ({ item }) => (
     <View style={styles.transactionItem}>
       <Text style={styles.transactionText}>{item.name} - R$ {item.amount.toFixed(2)}</Text>
+      <TouchableOpacity onPress={() => { setSelectedTransaction(item); setEditModalVisible(true); }} style={styles.editButton}>
+        <Text style={styles.buttonText}>Editar</Text>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => handleDelete(item)} style={styles.deleteButton}>
+        <Text style={styles.buttonText}>Excluir</Text>
+      </TouchableOpacity>
     </View>
-  );
-
-  const renderSectionHeader = ({ section: { title } }) => (
-    <Text style={styles.sectionTitle}>{title}</Text>
   );
 
   return (
@@ -157,6 +210,36 @@ const HomeScreen = () => {
             <Text style={styles.buttonText}>Adicionar</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.button} onPress={() => setModalVisible(false)}>
+            <Text style={styles.buttonText}>Cancelar</Text>
+          </TouchableOpacity>
+        </View>
+      </Modal>
+
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={editModalVisible}
+        onRequestClose={() => setEditModalVisible(false)}
+      >
+        <View style={styles.modalView}>
+          <Text style={styles.modalText}>Editar Transação</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Nome"
+            value={name}
+            onChangeText={setName}
+          />
+          <TextInput
+            style={styles.input}
+            placeholder="Valor"
+            value={amount}
+            onChangeText={setAmount}
+            keyboardType="numeric"
+          />
+          <TouchableOpacity style={styles.button} onPress={handleEdit}>
+            <Text style={styles.buttonText}>Salvar</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.button} onPress={() => setEditModalVisible(false)}>
             <Text style={styles.buttonText}>Cancelar</Text>
           </TouchableOpacity>
         </View>
@@ -318,7 +401,18 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: '#495057',
   },
+  editButton: {
+    backgroundColor: '#ffc107', // Amarelo para editar
+    padding: 5, // Diminuir o padding para deixar o botão menor
+    borderRadius: 5,
+    marginTop: 5, // Diminuir a margem superior
+  },
+  deleteButton: {
+    backgroundColor: '#dc3545', // Vermelho para excluir
+    padding: 5, // Diminuir o padding para deixar o botão menor
+    borderRadius: 5,
+    marginTop: 5, // Diminuir a margem superior
+  },
 });
-
 
 export default HomeScreen;
