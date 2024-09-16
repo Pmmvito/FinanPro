@@ -17,6 +17,7 @@ import styles from './src/styles/styles';
 import { Modal } from 'react-native-paper';
 import CalcularJurosSimples from './src/screens/CalcularJurosSimples';
 import CalcularJurosCompostos from './src/screens/CalcularJurosCompostos';
+import AcompanharRendimentoCdi from './src/screens/AcompanharRendimentoCdi';
 
 // Cria o Stack Navigator
 const Stack = createStackNavigator();
@@ -28,8 +29,9 @@ const App = () => {
         screenOptions={{ headerShown: false }} 
       >
         <Stack.Screen name="Main" component={MainTabNavigator} />
-        <Stack.Screen name="AddReceita" component={CalcularJurosCompostos} /> 
-        <Stack.Screen name="AddDespesas" component={CalcularJurosSimples} /> 
+        <Stack.Screen name="CalcularJurosCompostos" component={CalcularJurosCompostos} /> 
+        <Stack.Screen name="CalcularJurosSimples" component={CalcularJurosSimples} />
+        <Stack.Screen name="AcompanharRendimentoCdi" component={AcompanharRendimentoCdi} />  
       </Stack.Navigator>
     </NavigationContainer>
   );
