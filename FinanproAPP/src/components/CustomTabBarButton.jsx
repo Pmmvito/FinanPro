@@ -1,13 +1,11 @@
 // src/components/CustomTabBarButton.js
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import AddOpcao from '../screens/AddOpcao';
-
 const CustomTabBarButton = () => {
   return (
     <View style={styles.container}>
-      {/* Botão Flutuante Centralizado */}
-      <AddOpcao />
+
+      
     </View>
   );
 };
